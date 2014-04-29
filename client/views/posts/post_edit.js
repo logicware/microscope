@@ -21,6 +21,10 @@ Template.postEdit.events({
     e.preventDefault();
     if (confirm("Delete this post?")) {
       var currentPostId = this._id;
+      var comments = Comments.find({postId: currentPostId});
+      comments.forEach(function(comment){
+        Comments.remove(comment._id);
+      });
       Posts.remove(currentPostId);
       Router.go('home');
     }
